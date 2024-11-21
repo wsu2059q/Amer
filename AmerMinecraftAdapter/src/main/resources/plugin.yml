@@ -1,0 +1,10 @@
+name: AmerInterconnectAdapter
+version: 1.2.0
+description: "适配器插件，本喵将转发到AmerInterconnect"
+main: com.anran.amerinterconnectadapter.AmerInterconnectAdapter
+api-version: 1.13
+author: WSu2059
+commands:
+  getamertoken:
+    description: "获取本喵在这里留下的标记~(获取AmerToken)"
+    usage: "/getamertoken"
