@@ -1,0 +1,70 @@
+{
+    "temp_folder": "config/temp",
+    "server": {
+        "host": "0.0.0.0",
+        "port": 5888
+    },
+    "qq": {
+        "bot_name": "YOUR_BOT_QQ_NAME_HERE",
+        "bot_qq": "YOUR_BOT_QQ_HERE"
+    },
+    "yh": {
+        "token": "YOUR_YH_TOKEN_HERE",
+        "webhook": {
+            "path": "/yh/webhook"
+        }
+    },
+    "blocked_words": {
+        "涉政": [
+            "政治", "政府", "民主", "共产党", "选举",
+            "法治", "言论自由", "人权", "示威", "抗议",
+            "舆论", "自由", "独立", "暴动", "政权",
+            "镇压", "维权", "异议", "透明", "腐败",
+            "洗脑", "审查", "专制", "专政","习近平",
+            "胡锦涛", "江泽民", "温家宝", "朱镕基",
+            "李克强", "王沪宁", "赵紫阳"
+        ],
+        "骂人": [
+            "傻逼", "蠢货", "混蛋", "狗屎", "废物",
+            "傻瓜", "猪头", "白痴", "呆子", "死胖子",
+            "二货", "死傻逼", "废物", "无耻", "死蠢",
+            "低级", "蠢猪", "老狗", "傻逼", "傻屄"
+        ]
+    },
+    "WeatherApi": {
+        "url": "http://api.weatherapi.com/v1/current.json",
+        "token": "YOUR_WEATHER_API_TOKEN_HERE"
+    },
+    "OpenAI": {
+        "base_url": "https://api.openai.com",
+        "api_key": "YOUR_OPENAI_API_KEY_HERE"
+    },
+    "Redis": {
+        "host": "localhost",
+        "port": 6379,
+        "db": 8,
+        "password": "YOUR_REDIS_PASSWORD_HERE"
+    },
+    "SQLite": {
+        "db_path": "config/SqliteDB/bind.db"
+    },
+    "Message": {
+        "message-YH": "**指令说明**\n1. **/绑定 <QQ群号>**\n   - **功能**: 将当前云湖群与指定的QQ群进行绑定。\n2. **/同步模式 <全同步 / 停止 / QQ到云湖 / 云湖到QQ> [可选:QQ群]**\n   - **功能**: 切换消息同步模式，支持多向同步、单向同步（云湖到QQ、QQ到云湖）和停止同步。\n3. **/取消绑定 <QQ群号 / 全部>**\n   - **功能**: 取消与指定QQ群的绑定，输入“全部”时取消所有绑定。\n---\n**MC服务器同步功能**\n- 请下载 [喵的Minecraft连接装置(MC插件)](https://github.com/wsu2059q/AmerBotBackend/releases) 并放入MC服务器插件文件夹中。\n- 在控制台或游戏内使用 `/getamertoken` 获取Token并填入机器人设置中。\n---\n请注意：操作教程需在机器人私聊中使用 `/帮助` 指令。*",
+        "message-YH-followed": "# 欢迎使用Amer-Link!\n\n## 简介\n\n欢迎使用Amer！本机器人用于在云湖群和QQ群之间同步消息。请注意，您无法在当前页面使用绑定指令。\n\n### 功能更新\n\nAmer-Link现在支持以下功能：\n\n1. **单向消息同步**：消息可以设置 从云湖单向同步到QQ群 或 从QQ群单向同步到云湖\n2. **多向消息同步**：消息可以在云湖和QQ群之间多向同步\n3. **其它同步**：除了文字消息，图片,表情包等图像也可以在云湖和QQ群之间同步\n4. **MC服务器同步**：\n   - 请下载 [喵的Minecraft连接装置(MC插件)](https://github.com/wsu2059q/AmerBotBackend/releases) 并放入MC服务器插件文件夹中。\n   - 在控制台或游戏内使用 `/getamertoken` 获取Token并填入机器人设置中。\n\n### 如何使用\n\n1. **添加Amer至群聊**：\n   - 请确保将Amer添加至您的QQ群和云湖群。\n   - [点击此处添加QQ-Amer](https://qm.qq.com/q/2RSZSEkRwY)\n\n2. **在云湖端操作**：\n   - 在云湖群中绑定您的QQ群，以便开始消息同步。\n   - 当云湖群绑定QQ群时，QQ群中会提示“此群被云湖绑定了”。\n\n3. **选择同步模式**：\n   - 根据您的需求选择单向或多向消息同步。 \n---\n*请注意：指令详情请在云湖群中使用 `/帮助` 指令查看。*\n\n如果想请我嚯奶茶,[点我赞助](https://ifdian.net/a/YingXinche)"
+    },
+    "AI": {
+        "Ban": {
+            "ban_ai_id": [
+
+            ]
+        },
+        "max_length": 20
+    },
+    "commands": {
+        "qq": {
+            "隐私模式 <开/关> [最大上文提示 <数量>]": "🔒 当隐私模式开启时：\n  - Amer除了指定消息外将不会记录或处理任何信息\n🔑 当隐私模式关闭时：\n  - Amer将会记录和处理设置的最大消息历史，无论它们是以何种形式发送的\n\n💡 你可以通过设置最大上文提示数来设置Amer记录的最大消息历史，默认为{ai_max_length}",
+            "绑定mc服务器 <Token>": "🔗 绑定QQ和Minecraft服务器以同步消息。\n\n📥 获取Token：\n  - 从 https://github.com/wsu2059q/AmerBotBackend/releases/ 下载Minecraft插件。\n  - 将插件加载到Minecraft服务器（需要支持加载插件），理论所有版本都可以。\n  - 在控制台（推荐）或游戏内（服务器）使用 `/getamertoken` 命令获取Token。\n\n🔑 使用 `/绑定MC <Token>` 指令将Token绑定到此QQ群。",
+            "setu/色图/来张色图": "🎨 获取色图的指令，支持多种参数组合：\n\n- `/来张色图`：获取随机色图。\n- `/来张色图 tag <标签1>,<标签2>`：根据指定标签获取色图。\n- `/来张色图 author <作者名>`：根据指定作者获取色图。\n- `/来张色图 id <图片ID>`：根据指定ID获取色图。\n- `/来张色图 <tag/author/id> <参数> r18`：结合标签、作者、ID和R18获取色图。"
+        }
+    }
+}
