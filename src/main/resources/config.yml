@@ -1,2 +1,0 @@
-api_url: "https://api.anran.xyz/mc/handle"
-heartbeat_interval: 5  # 心跳间隔时间（秒）
