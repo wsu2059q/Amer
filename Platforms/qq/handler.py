@@ -142,46 +142,6 @@ async def handle_command(message_data: MessageData, qqBot):
             else:
                 await qqBot.send_group_msg(group_id=message_data.group_id, message="绑定MC指令格式错误，请使用 /绑定mc服务器 <Token>")
                 logger.warning(f"绑定MC指令格式错误: {command}")
-    elif any(command.startswith(prefix) for prefix in ["来张色图", "色图", "图", "setu", "美图", "图片", "萌图"]):
-        parts = command.split()
-        if len(parts) > 1:
-            tags = parts[1:]
-            if "r18" in tags:
-                r18 = 1
-                tags.remove("r18")
-            else:
-                r18 = None
-            response = get_setu(tag=tags, r18=r18)
-            if response.error:
-                await qqBot.send_group_msg(group_id=message_data.group_id, message=f"获取色图失败: {response.error}")
-                logger.error(f"获取色图失败: {response.error}")
-            elif not response.data:
-                await qqBot.send_group_msg(group_id=message_data.group_id, message="没有找到符合条件的色图")
-                logger.warning(f"没有找到符合条件的色图: {command}")
-            else:
-                for setu in response.data:
-                    image_url = setu.urls['original']
-                    details = setu.to_details()
-                    cq_code = f"[CQ:image,file={image_url}]"
-                    await qqBot.send_group_msg(group_id=message_data.group_id, message=cq_code)
-                    await qqBot.send_group_msg(group_id=message_data.group_id, message=details)
-                    logger.info(f"发送色图: {setu.title}")
-        else:
-            response = get_setu()
-            if response.error:
-                await qqBot.send_group_msg(group_id=message_data.group_id, message=f"获取色图失败: {response.error}")
-                logger.error(f"获取色图失败: {response.error}")
-            elif not response.data:
-                await qqBot.send_group_msg(group_id=message_data.group_id, message="没有找到随机色图")
-                logger.warning(f"没有找到随机色图")
-            else:
-                for setu in response.data:
-                    image_url = setu.urls['original']
-                    details = setu.to_details()
-                    cq_code = f"[CQ:image,file={image_url}]"
-                    await qqBot.send_group_msg(group_id=message_data.group_id, message=cq_code)
-                    await qqBot.send_group_msg(group_id=message_data.group_id, message=details)
-                    logger.info(f"发送色图: {setu.title}")
     elif command.startswith("隐私模式"):
         parts = command.split()
         if not len(parts) > 1:
