@@ -45,6 +45,13 @@ public class AmerInterconnectAdapter extends JavaPlugin implements CommandExecut
             saveConfig();
         }
 
+        // 检查是否已经生成了amer_key
+        if (!config.contains("amer_key")) {
+            String amerKey = TokenGenerator.generateToken().substring(0, 6);
+            config.set("amer_key", amerKey);
+            saveConfig();
+        }
+
         // 注册服务器
         if (!registerServer()) {
             getLogger().severe("服务器注册失败，插件将停止运行。");
@@ -54,6 +61,8 @@ public class AmerInterconnectAdapter extends JavaPlugin implements CommandExecut
 
         // 注册命令
         this.getCommand("getamertoken").setExecutor(this);
+        this.getCommand("getamerkey").setExecutor(this);
+        this.getCommand("setamerkey").setExecutor(this);
         getLogger().info("Amer来咯,接住本喵~");
 
         // 注册事件监听器
@@ -96,6 +105,34 @@ public class AmerInterconnectAdapter extends JavaPlugin implements CommandExecut
             } else {
                 // 发送者不是OP，告知没有权限
                 sender.sendMessage("本Amer不告诉你,略略略~。");
+                return true;
+            }
+        } else if (command.getName().equalsIgnoreCase("getamerkey")) {
+            // 检查发送者是否是OP
+            if (sender.isOp()) {
+                // 获取密钥
+                String amerKey = config.getString("amer_key");
+                sender.sendMessage("当前密钥: " + amerKey);
+                return true;
+            } else {
+                // 发送者不是OP，告知没有权限
+                sender.sendMessage("你没有权限查看密钥哦~");
+                return true;
+            }
+        } else if (command.getName().equalsIgnoreCase("setamerkey")) {
+            // 检查发送者是否是OP
+            if (sender.isOp()) {
+                if (args.length == 1) {
+                    config.set("amer_key", args[0]);
+                    saveConfig();
+                    sender.sendMessage("密钥已更新为: " + args[0]);
+                    return true;
+                } else {
+                    sender.sendMessage("用法: /setamerkey <新密钥>");
+                    return true;
+                }
+            } else {
+                sender.sendMessage("你没有权限修改密钥哦~");
                 return true;
             }
         }
@@ -231,7 +268,20 @@ public class AmerInterconnectAdapter extends JavaPlugin implements CommandExecut
             if (token.equals(localToken)) {
                 if ("消息".equals(messageType)) {
                     getServer().broadcastMessage(value);
-                } else if ("指令".equals(messageType)) {
+                } else if ("指令".equals(messageType) || "指令v2".equals(messageType)) {
+                    // 如果是v2指令，需要验证密钥
+                    if ("指令v2".equals(messageType)) {
+                        if (parts.length < 5) {
+                            getLogger().warning("指令v2格式错误，缺少密钥: " + message);
+                            return;
+                        }
+                        String receivedKey = parts[4];
+                        String localKey = config.getString("amer_key", "");
+                        if (!receivedKey.equals(localKey)) {
+                            getLogger().warning("指令v2密钥验证失败，丢弃指令: " + message);
+                            return;
+                        }
+                    }
                     // 调度到主线程执行命令
                     new BukkitRunnable() {
                         @Override
