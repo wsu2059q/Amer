@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>xyz.anran.link</groupId>
   <artifactId>AmerInterconnectAdapter</artifactId>
-  <version>1.2.0</version>
+  <version>1.2.5</version>
   <build>
     <plugins>
       <plugin>
